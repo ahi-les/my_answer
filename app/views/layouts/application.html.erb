@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyAnswer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="navbar">
+        <p class="title-sm text-bold"><%= link_to 'MyAnswer', root_path %></p>
+        <div class="navbar-user">
+          <% if current_user.present? %>
+            <p class="mr"><%= "#{current_user.nickname}" %></p>
+            <%= button_to 'Выйти',session_path, method: :delete, class: 'button button_main' %>
+          <% else %>
+            <%= link_to 'Регистрация', new_user_path, class: 'button button-yellow mr-sm' %>
+            <%= link_to 'Войти', new_session_path, class: 'button button-yellow' %>
+          <% end %>
+        </div>
+        
+      </div>
+      <% if flash[:notice].present? %>
+        <p class="mb mt container message-notice"><%= flash[:notice] %></p>
+      <% elsif flash[:alert].present? %>
+        <p class="mb mt message message-alert"><%= flash[:alert] %></p>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>
